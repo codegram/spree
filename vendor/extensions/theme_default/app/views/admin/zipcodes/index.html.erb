@@ -1,0 +1,25 @@
+<%= render :partial => 'admin/shared/configuration_menu' %>
+
+<h1><%= t("zipcodes") %></h1>
+
+<p>
+  <label for="country"><%= t('country') %></label>
+  <select id="country">
+  <%= options_from_collection_for_select(@countries, :id, :name, @country.id) %>
+  </select>
+</p>
+
+<%= observe_field :country,
+                  :update => 'zipcode-list',
+                  :url => admin_zipcodes_path,
+                  :before => "jQuery('#zipcode-list').hide(); jQuery('#busy_indicator').show()", 
+                  :complete => "jQuery('#busy_indicator').hide(); jQuery('#zipcode-list').show()",
+                  :method => :get,
+                  :with => "'country_id='+encodeURIComponent(value)",
+                  :update => 'zipcode-list' %>                  
+
+<%= image_tag "spinner.gif", :plugin=>"spree", :style => "display:none", :id => 'busy_indicator' %>
+
+<div id="zipcode-list">
+  <%=render :partial => 'zipcode_list'%>
+</div>

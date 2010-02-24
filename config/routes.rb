@@ -70,8 +70,12 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :coupons
     admin.resources :zones
     admin.resources :users
-    admin.resources :countries, :has_many => :states
+    admin.resources :countries do |country|
+      country.resources :states
+      country.resources :zipcodes
+    end
     admin.resources :states
+    admin.resources :zipcodes
     admin.resources :tax_categories
     admin.resources :configurations
     admin.resources :products, :member => {:clone => :get}, :has_many => [:product_properties, :images] do |product|

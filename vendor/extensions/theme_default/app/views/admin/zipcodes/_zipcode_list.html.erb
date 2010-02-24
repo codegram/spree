@@ -1,0 +1,26 @@
+<table class="index">
+  <thead>
+    <tr>
+      <th><%= t("zipcode") %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @zipcodes.each do |zipcode| %>
+      <tr>
+        <td><%=zipcode.code %></td>
+        <td class="actions">
+          <%=link_to_with_icon 'edit', t("edit"), edit_admin_country_zipcode_url(@country, zipcode) %> &nbsp;
+          <%=link_to_with_icon 'delete', t("delete"), object_url(zipcode), :method => :delete %>
+        </td>
+      </tr>
+    <% end %>
+    <% if @zipcodes.empty? %>
+      <tr><td colspan="3">None.</td></tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p>
+  <%= button_link_to t("new_zipcode"), new_admin_country_zipcode_url(@country), :icon => 'add' %>
+</p>

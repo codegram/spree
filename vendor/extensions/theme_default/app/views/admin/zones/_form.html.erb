@@ -22,8 +22,13 @@
     <%= zone_form.radio_button("kind", "zone", {:id => "zone_based"}) %>
     <%= t("zone_based") %>
   </label>
+  <label class="sub">                                         
+    <%= zone_form.radio_button("kind", "zipcode", {:id => "zipcode_based"}) %>
+    <%= t("zipcode_based") %>
+  </label>
 </p>
 
 <%= render "member_type", :type => "country", :zone_form => zone_form %> 
 <%= render "member_type", :type => "state", :zone_form => zone_form %>        
+<%= render "member_type", :type => "zipcode", :zone_form => zone_form %>
 <%= render "member_type", :type => "zone", :zone_form => zone_form %>

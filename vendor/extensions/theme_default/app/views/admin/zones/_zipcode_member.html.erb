@@ -1,0 +1,5 @@
+<li>                                       
+  <%= f.hidden_field :zoneable_type, :value => "Zipcode" %>
+  <%= f.select(:zoneable_id, @zipcodes.collect{|z| ["#{z.code} (#{z.country.name})", z.id]}, :include_blank => true) %>
+  <%= remove_nested f %>    
+</li>

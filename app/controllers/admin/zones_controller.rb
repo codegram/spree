@@ -3,6 +3,14 @@ class Admin::ZonesController < Admin::BaseController
   
   before_filter :load_data
 
+  create.before do
+
+    logger.info '*'*20
+    logger.info params.inspect
+    logger.info '*'*20
+
+  end
+
   create.response do |wants|
     wants.html { redirect_to collection_url }
   end
@@ -16,7 +24,7 @@ class Admin::ZonesController < Admin::BaseController
   private
   def build_object
     @object ||= end_of_association_chain.send parent? ? :build : :new, object_params
-    @object.zone_members.build() if @object.zone_members.empty?  
+    @object.zone_members.build() if @object.zone_members.empty?
     @object
   end
 
@@ -31,5 +39,6 @@ class Admin::ZonesController < Admin::BaseController
     @countries = Country.all.sort
     @states = State.all.sort
     @zones = Zone.all.sort
+    @zipcodes = Zipcode.all.sort
   end
 end

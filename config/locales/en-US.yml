@@ -200,6 +200,7 @@ en-US:
   add_product: "Add Product"
   add_product_properties: "Add Product Properties"
   add_state: "Add State"
+  add_zipcode: "Add Zip Code"
   add_to_cart: "Add To Cart"
   add_zone: "Add Zone"
   additional_item: Additional Item Cost
@@ -336,6 +337,7 @@ en-US:
   editing_shipping_method: "Editing Shipping Method"
   editing_shipping_rate: Editing Shipping Rate
   editing_state: "Editing State"
+  editing_state: "Editing Zip Code"
   editing_tax_category: "Editing Tax Category"
   editing_tax_rate: "Editing Tax Rate"
   editing_tracker: Editing Tracker
@@ -481,6 +483,7 @@ en-US:
   new_shipping_method: "New Shipping Method"
   new_shipping_rate: New Shipping Rate
   new_state: "New State"
+  new_zipcode: "New Zip Code"
   new_tax_category: "New Tax Category"
   new_tax_rate: "New Tax Rate"
   new_taxon: "New Taxon"
@@ -802,9 +805,12 @@ en-US:
   start: Start
   start_date: Valid from
   state: State
+  zipcode: Zip Code
   state_based: "State Based"
+  zipcode_based: "Zip Code Based"
   state_setting_description: "Administer the list of states/provinces associated with each country."
   states: States
+  zipcodes: Zip Codes
   status: Status
   stop: Stop
   store: Store

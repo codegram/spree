@@ -18,6 +18,7 @@ class Zone < ActiveRecord::Base
     case member && member.zoneable_type
     when "State"  then "state"
     when "Zone"   then "zone"
+    when "Zipcode" then "zipcode"
     else
       "country"
     end
@@ -45,6 +46,8 @@ class Zone < ActiveRecord::Base
         zone_member.zoneable == address.country
       when "State"
         zone_member.zoneable == address.state
+      when "Zipcode"
+        zone_member.zoneable.code == address.zipcode and zone_member.zoneable.country == address.country
       else
         false
       end
