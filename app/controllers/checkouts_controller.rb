@@ -5,6 +5,7 @@ class CheckoutsController < Spree::BaseController
   before_filter :load_data
   before_filter :set_state
   before_filter :enforce_registration, :except => :register
+  before_filter :ensure_payment_methods
   helper :users
 
   resource_controller :singleton
@@ -111,7 +112,7 @@ class CheckoutsController < Spree::BaseController
         @object.bill_address ||= user.bill_address.clone unless user.bill_address.nil?
       end
       @object.ship_address ||= Address.default
-      @object.bill_address     ||= Address.default
+      @object.bill_address ||= Address.default
     end
     @object.email ||= params[:checkout][:email] if params[:checkout]
     @object.email ||= current_user.email if current_user
@@ -215,4 +216,13 @@ class CheckoutsController < Spree::BaseController
   def accurate_title
     I18n.t(:checkout)
   end
+  
+  def ensure_payment_methods
+    if PaymentMethod.available.none?
+      flash[:error] = t(:no_payment_methods_available)
+      redirect_to edit_order_path(params[:order_id])
+      false
+    end
+  end
+  
 end

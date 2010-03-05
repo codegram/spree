@@ -24,9 +24,11 @@ pl:
         address1: Address
         address2: "Address (contd.)"
         city: City
-        firstname: "First Name"
-        lastname: "Last Name"
+        country: "Country"
+        first_name: "First Name"
+        last_name: "Last Name"
         phone: Phone
+        state: "State"
         zipcode: "Zip Code"
       checkout:
         bill_address:
@@ -79,6 +81,15 @@ pl:
         on_hand: "On Hande"
         shipping_category: "Shipping Category"
         tax_category: "Tax Category"
+      product_group:
+        name: "Name"
+        product_count: "Product count"
+        product_scopes: "Product scopes"
+        products: "Products"
+        url: "URL"
+      product_scope:
+        arguments: "Arguments"
+        description: "Description"
       property: 
         name: Name
         presentation: Presentation
@@ -149,6 +160,9 @@ pl:
       product: 
         one: Product
         other: Products
+      product_group:
+        one: "Product group"
+        other: "Product groups"
       property: 
         one: Property
         other: Properties
@@ -199,6 +213,7 @@ pl:
   add_option_value: "Add Option Value"
   add_product: "Add Product"
   add_product_properties: "Dodaj właściwości produktu"
+  add_scope: "Add a scope"
   add_state: "Add State"
   add_to_cart: "Dodaj do koszyka"
   add_zone: "Add Zone"
@@ -330,6 +345,7 @@ pl:
   editing_option_types: "Edycja typów opcji"
   editing_payment_method: Editing Payment Method
   editing_product: "Editing Product"
+  editing_product_group: "Editing Product Group"
   editing_property: "Editing Property"
   editing_prototype: "Editing Prototype"
   editing_shipping_category: "Editing Shipping Category"
@@ -361,6 +377,7 @@ pl:
   extensions: Rozszerzenia
   filename: "Nazwa pliku"
   final_confirmation: "Ostateczne potwierdzenie"
+  finalize: Finalize
   finalized_payments: Finalized Payments
   first_item: First Item Cost
   first_name: Imię
@@ -422,6 +439,7 @@ pl:
   listing_categories: "Lista kategorii"
   listing_option_types: "Lista typów opcji"
   listing_orders: "Lista zamówień"
+  listing_product_groups: "Listing Product Groups"
   listing_reports: "Lista raportów"
   listing_tax_categories: "Listing Tax Categories"
   listing_users: "Lista użytkowników"
@@ -489,6 +507,7 @@ pl:
   next: Następne
   no_items_in_cart: "Koszyk jest pusty"
   no_match_found: "No Match Found"
+  no_payment_methods_available: "Can't check out, no payment methods are configured for this environment"
   no_products_found: "No products found"
   no_shipping_methods_available: "No shipping methods available, please change your address and try again."
   no_user_found: "No user was found with that email address"
@@ -590,7 +609,7 @@ pl:
         name: Ascend by product name
       ascend_by_updated_at:
         name: Ascend by actualization date
-      by_popularity:
+      descend_by_popularity:
         name: Sort by popularity(most popular first)
       descend_by_master_price:
         name: Descend by product master price
@@ -614,7 +633,7 @@ pl:
         args:
           words: Words
         description: "(separated by space or comma)"
-        name: "Product name or meta heywords have following"
+        name: "Product name or meta keywords have following"
         sentence: name or keywords contain <em>%s</em>
       in_taxons:
         args:
@@ -729,6 +748,8 @@ pl:
   sales_totals_description: "Sales Total For All Orders"
   save_and_continue: Save and Continue
   save_preferences: Save Preferences           
+  scope: Scope
+  scopes: Scopes
   search: Szukaj
   search_results: "Search results for '{{keywords}}'"
   secure_connection_type: Secure Connection Type
@@ -773,6 +794,7 @@ pl:
   show_only_complete_orders: "Only show complete orders"
   show_out_of_stock_products: "Show out-of-stock products"
   show_price_inc_vat: "Show price including VAT"
+  showing_first_n: "Showing first {{n}}"
   sign_up: "Załóż konto"
   site_name: "Site Name"
   site_url: "Site URL"

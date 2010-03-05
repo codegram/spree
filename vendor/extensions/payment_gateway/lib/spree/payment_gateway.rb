@@ -2,8 +2,7 @@ module Spree
   module PaymentGateway    
     
     def self.included(base)
-      base.named_scope :with_payment_profile, :conditions => "gateway_customer_profile_id IS NOT NULL AND gateway_payment_profile_id IS NOT NULL"
-      base.after_save :create_payment_profile
+      base.named_scope :with_payment_profile, :conditions => "gateway_customer_profile_id IS NOT NULL"
     end
     
     def authorize(amount, payment)
@@ -82,6 +81,7 @@ module Spree
         :response_code => response.authorization,
         :txn_type => CreditcardTxn::TxnType::VOID
       )
+      payment.update_attribute(:amount, 0.00)
       payment.finalize!
     end
 
@@ -104,6 +104,8 @@ module Spree
         :response_code => response.authorization,
         :txn_type => CreditcardTxn::TxnType::CREDIT
       )
+      payment.update_attribute(:amount, payment.amount - amount)
+      payment.order.update_totals!
     rescue ActiveMerchant::ConnectionError => e
       gateway_error I18n.t(:unable_to_connect_to_gateway)      
     end
@@ -126,7 +128,7 @@ module Spree
 
     def can_capture?(payment)
       authorization(payment).present? &&
-      has_no_transaction_of_types?(payment, CreditcardTxn::TxnType::CAPTURE, CreditcardTxn::TxnType::VOID)
+      has_no_transaction_of_types?(payment, CreditcardTxn::TxnType::PURCHASE, CreditcardTxn::TxnType::CAPTURE, CreditcardTxn::TxnType::VOID)
     end
 
     def can_void?(payment)
@@ -194,7 +196,14 @@ module Spree
       @payment_gateway ||= Gateway.current
     end  
     
-
+    # TODO: Want to do this after_save but there is a possible danger of infinite loop which number_changed? check is intended to prevent.
+    # Removed the check to number_changed? and relying on the !has_payment_profile? to not re-create if we have a profile
+    def create_payment_profile
+      return unless payment_gateway.payment_profiles_supported? and number and !has_payment_profile?
+      payment_gateway.create_profile(self, {})
+    rescue ActiveMerchant::ConnectionError => e
+      gateway_error I18n.t(:unable_to_connect_to_gateway)
+    end
 
     private
 
@@ -205,16 +214,5 @@ module Spree
       def has_no_transaction_of_types?(payment, *types)
         (payment.txns.map(&:txn_type) & types).none?
       end
-
-      # TODO: Want to do this after_save but there is a possible danger of infinite loop which number_changed? check is intended to prevent. 
-      def create_payment_profile      
-        return unless payment_gateway.payment_profiles_supported? and number and number_changed?
-        if number_changed?
-          payment_gateway.create_profile(self, {})
-        end
-      rescue ActiveMerchant::ConnectionError => e
-        gateway_error I18n.t(:unable_to_connect_to_gateway)
-      end
-
   end
 end

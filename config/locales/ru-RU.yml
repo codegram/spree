@@ -17,16 +17,18 @@ ru-RU:
     listing: "Список"
     new: "Новый"
     update: "Изменить"
-  active: "Active"
+  active: "Активен"
   activerecord:
     attributes:
       address:
         address1: "Адрес"
         address2: "Адрес (2я строка)"
         city: "Город"
-        firstname: "Имя"
-        lastname: "Фамилия"
+        country: "Страна"
+        first_name: "Имя"
+        last_name: "Фамилия"
         phone: "Телефон"
+        state: "Регион/Область"
         zipcode: "Индекс"
       checkout:
         bill_address:
@@ -79,6 +81,15 @@ ru-RU:
         on_hand: "В наличии"
         shipping_category: "Категория доставки"
         tax_category: "Налоговая категория"
+      product_group:
+        name: "Название"
+        product_count: "Кол-во товаров"
+        product_scopes: "Фильрты"
+        products: "Товары"
+        url: "URL"
+      product_scope:
+        arguments: "Аргументы"
+        description: "Описание"
       property:
         name: "Наименование"
         presentation: "Отображение"
@@ -149,6 +160,9 @@ ru-RU:
       product:
         one: "Товар"
         other: "Товары"
+      product_group:
+        one: "Группа товаров"
+        other: "Группы товаров"
       property:
         one: "Свойство"
         other: "Свойства"
@@ -168,8 +182,8 @@ ru-RU:
         one: "Категория доставки"
         other: "Категории доставки"
       state:
-        one: "Статус"
-        other: "Статусы"
+        one: "Регион/Область"
+        other: "Регионы"
       tax_category:
         one: "Налоговая категория"
         other: "Налоговые категории"
@@ -199,7 +213,8 @@ ru-RU:
   add_option_value: "Добавить значение опции"
   add_product: "Добавить товар"
   add_product_properties: "Добавить свойства товара"
-  add_state: "Добавить субъект федерации"
+  add_scope: "Добавить фильтр"
+  add_state: "Добавить регион/область"
   add_to_cart: "Добавить в корзину"
   add_zone: "Добавить зону"
   additional_item: "Ставка для дополнительных наименований"
@@ -266,7 +281,7 @@ ru-RU:
     # keys correspond to Checkout state names:
     address: "Адрес"
     complete: "Завершение"
-    confirm: Confirm
+    confirm: "Подтверждение"
     delivery: "Доставка"
     payment: "Оплата"
   cheque: "Чек"
@@ -281,7 +296,7 @@ ru-RU:
   configuration: "Конфигурация"
   configuration_options: "Опции конфигурации"
   configurations: "Конфигурация"
-  configured: Configured
+  configured: "Сконфигурировано"
   confirm: "Подтвердить"
   confirm_delete: "Подтверждение удаления"
   confirm_password: "Подтверждение пароля"
@@ -311,7 +326,7 @@ ru-RU:
   creditcards: "Кредитнык карты"
   credits: "Кредиты"
   current: "Текущий"
-  customer: "Пользователь"
+  customer: "Клиент"
   customer_details: "Реквизиты клиента"
   customer_search: "Поиск клиента"
   date_created: "Дата создания"
@@ -328,14 +343,15 @@ ru-RU:
   editing_coupon: "Редактировать купон"
   editing_option_type: "Редактирование опции"
   editing_option_types: "Редактирование опций"
-  editing_payment_method: Editing Payment Method
+  editing_payment_method: "Редактирование способа оплаты"
   editing_product: "Редактирование товара"
+  editing_product_group: "Редактирование группы товаров"
   editing_property: "Редактирование свойства"
   editing_prototype: "Редактирование прототипа"
   editing_shipping_category: "Редактирование категории доставки"
   editing_shipping_method: "Редактирование способа доставки"
   editing_shipping_rate: "Редактирование стоимости доставки"
-  editing_state: "Редактирование статуса"
+  editing_state: "Редактирование региона/области"
   editing_tax_category: "Редактирование категории налога"
   editing_tax_rate: "Редактирование налоговой ставки"
   editing_tracker: "Редактирование трекера"
@@ -350,7 +366,7 @@ ru-RU:
   enable_mail_delivery: "Включить доставку почты"
   enable_mail_queue: "Включить очередь почтовых сообщений"
   enter_exactly_as_shown_on_card: "Пожалуйста, введите точно как показано на карте"
-  environment: "Environment"
+  environment: "Среда окружения"
   error: "ошибка"
   event: "Событие"
   existing_customer: "Для зарегистрированных пользователей"
@@ -361,7 +377,8 @@ ru-RU:
   extensions: "Расширения"
   filename: "Имя файла"
   final_confirmation: "Окончательное подтверждение"
-  finalized_payments: Finalized Payments
+  finalize: "Завершить"
+  finalized_payments: "Завершённые платежи"
   first_item: "Начальная ставка"
   first_name: "Имя"
   flat_percent: "Фиксированный процент"
@@ -375,7 +392,7 @@ ru-RU:
   gateway_configuration: "Настройка платёжных шлюзов"
   gateway_error: "Ошибка платежного шлюза"
   gateway_setting_description: "Выберите платежный шлюз и настройте его."
-  gateway_settings_warning: "If you are changing the gateway type, you must save first before you can edit the gateway settings"
+  gateway_settings_warning: "Если вы меняете тип шлюза, вы должны сохранить это изменение, прежде чем вы сможете изменить настройки шлюза."
   general: "Основные"
   general_settings: "Общие настройки"
   general_settings_description: "Общие настройки магазина."
@@ -422,6 +439,7 @@ ru-RU:
   listing_categories: "Список категорий"
   listing_option_types: "Список опций"
   listing_orders: "Список заказов"
+  listing_product_groups: "Список групп товаров"
   listing_reports: "Список отчетов"
   listing_tax_categories: "Список категорий налогов"
   listing_users: "Список пользователей"
@@ -467,7 +485,7 @@ ru-RU:
   new_option_value: "Новое значение опции"
   new_order: "Новый заказ"
   new_payment: "Новый платёж"
-  new_payment_method: New Payment Method
+  new_payment_method: "Новый способ оплаты"
   new_product: "Новый товар"
   new_product_group: "Новая группа товаров"
   new_property: "Новое свойство"
@@ -477,7 +495,7 @@ ru-RU:
   new_shipping_category: "Новая категория доставки"
   new_shipping_method: "Новый способ доставки"
   new_shipping_rate: "Новая ставка стоимости доставки"
-  new_state: "Новый субъект федерации"
+  new_state: "Новый регион/область"
   new_tax_category: "Новая категория налогов"
   new_tax_rate: "Новая ставка налога"
   new_taxon: "Новый таксон"
@@ -489,6 +507,7 @@ ru-RU:
   next: "след."
   no_items_in_cart: "нет товаров к корзине"
   no_match_found: "Совпадений не найдено"
+  no_payment_methods_available: "Невозможно оформить заказ, так как отстуствуют способы оплаты."
   no_products_found: "Не найдено ни одного товара"
   no_shipping_methods_available: "Нет доступных методов доставки, пожалуйста, смените ваш адрес доставки и попробуйте ещё раз."
   no_user_found: "Пользователь с таким адресом email у нас не числится."
@@ -541,12 +560,12 @@ ru-RU:
   payment: "Платеж"
   payment_gateway: "Платежный шлюз"
   payment_information: "Информация о платеже"
-  payment_method: Payment Method
-  payment_methods: Payment Methods
-  payment_methods_setting_description: Configure methods customers can use to pay
-  payment_updated: Payment Updated
+  payment_method: "Способ оплаты"
+  payment_methods: "Способы оплаты"
+  payment_methods_setting_description: "Настройка способов оплаты, которые может использовать клиент"
+  payment_updated: "Платёж обновлён"
   payments: "Платежи"
-  pending_payments: Pending Payments
+  pending_payments: "Незавершённые платежи"
   permalink: "Постоянная ссылка"
   phone: "Телефон"
   place_order: "Разместить заказ"
@@ -590,7 +609,7 @@ ru-RU:
         name: "по названию товара (по алфавиту)"
       ascend_by_updated_at:
         name: "по дате обновления информации о товаре (прямой порядок)"
-      by_popularity:
+      descend_by_popularity:
         name: "По популярности (обратный порядок)"
       descend_by_master_price:
         name: "по основной цене товара (по убыванию)"
@@ -685,8 +704,8 @@ ru-RU:
   property: "Свойство"
   prototype: "Прототип"
   prototypes: "Прототипы"
-  provider: "Provider"
-  provider_settings_warning: "If you are changing the provider type, you must save first before you can edit the provider settings"
+  provider: "Провайдер"
+  provider_settings_warning: "Если вы меняете провайдера, вы должны сохранить это изменение, прежде чем вы сможете изменить настройки провайдера."
   qty: "Кол-во"
   quantity_shipped: "Отправленное количество"
   range: "Диапазон"
@@ -729,6 +748,8 @@ ru-RU:
   sales_totals_description: "итоги продаж для всех заказов."
   save_and_continue: "Сохранить и продолжить"
   save_preferences: "Сохранить настройки"
+  scope: "Фильтр"
+  scopes: "Фильтры"
   search: "Поиск"
   search_results: "Результаты поиска по запросу '{{keywords}}'"
   secure_connection_type: "Тип защищенного соединения"
@@ -740,7 +761,7 @@ ru-RU:
   send_copy_of_orders_mails_to: "Отсылать копии всех писем с заказами на"
   send_mails_as: "Отсылать почту как"
   send_order_mails_as: "Отсылать почту с заказами как"
-  server: Server
+  server: "Сервер"
   server_error: "На сервере произошла ошибка"
   settings: "Настройки"
   ship: "доставка"
@@ -773,6 +794,7 @@ ru-RU:
   show_only_complete_orders: "Показывать только обработанные заказы"
   show_out_of_stock_products: "Показать товары, которых нет в наличии"
   show_price_inc_vat: "Показывать цену с налогом"
+  showing_first_n: "Показаны первые {{n}}"
   sign_up: "Регистрация"
   site_name: "Название магазина"
   site_url: "Адрес магазина URL"
@@ -799,13 +821,13 @@ ru-RU:
   ssl_will_not_be_used_in_production_mode: "SSL шифрование НЕ будет включено в режиме production."
   start: "Начало"
   start_date: "Действительно с"
-  state: "Субъект федерации"
+  state: "Регион/Область"
   state_based: "есть области"
-  state_setting_description: "Список областей и городов, входящих в страны."
-  states: "Субъекты федерации"
+  state_setting_description: "Управление списком областей и регионов, входящих в страны."
+  states: "Регионы/Области"
   status: "Статус"
   stop: "Конец"
-  store: "Сохранить"
+  store: "В магазин"
   street_address: "Адрес"
   street_address_2: "Адрес (строка 2)"
   subtotal: "Подитог"
@@ -830,7 +852,7 @@ ru-RU:
   taxonomy_tree_instruction: "* Щёлкните правой кнопкой мыши на элеменете дерева для добавления, удаления или сортировки таксонов."
   taxons: "Таксоны"
   test: "Test"
-  test_mode: Test Mode
+  test_mode: "Тестовый режим"
   thank_you_for_your_order: "Спасибо за покупку!"
   this_file_language: "Русский (RU)"
   this_month: "Этот месяц"
@@ -888,5 +910,5 @@ ru-RU:
   zip: "Индекс"
   zone: "Торговая зона"
   zone_based: "состоит из других зон"
-  zone_setting_description: "Список стран, областей и других георгафических зон."
+  zone_setting_description: "Настройка торговых зон на основе стран, областей и других торговых зон."
   zones: "Торговые зоны"

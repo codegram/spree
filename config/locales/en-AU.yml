@@ -24,9 +24,11 @@ en-AU:
         address1: Address
         address2: "Address (contd.)"
         city: Town / City
-        firstname: "First Name"
-        lastname: "Last Name"
+        country: "Country"
+        first_name: "First Name"
+        last_name: "Last Name"
         phone: Phone
+        state: "State"
         zipcode: "Post Code"
       checkout:
         bill_address:
@@ -79,6 +81,15 @@ en-AU:
         on_hand: "On Hand"
         shipping_category: "Shipping Category"
         tax_category: "Tax Category"
+      product_group:
+        name: "Name"
+        product_count: "Product count"
+        product_scopes: "Product scopes"
+        products: "Products"
+        url: "URL"
+      product_scope:
+        arguments: "Arguments"
+        description: "Description"
       property:
         name: Name
         presentation: Presentation
@@ -149,6 +160,9 @@ en-AU:
       product:
         one: Product
         other: Products
+      product_group:
+        one: "Product group"
+        other: "Product groups"
       property:
         one: Property
         other: Properties
@@ -199,6 +213,7 @@ en-AU:
   add_option_value: "Add Option Value"
   add_product: "Add Product"
   add_product_properties: "Add Product Properties"
+  add_scope: "Add a scope"
   add_state: "Add State"
   add_to_cart: "Add To Basket"
   add_zone: "Add Zone"
@@ -330,6 +345,7 @@ en-AU:
   editing_option_types: "Editing Option Types"
   editing_payment_method: Editing Payment Method
   editing_product: "Editing Product"
+  editing_product_group: "Editing Product Group"
   editing_property: "Editing Property"
   editing_prototype: "Editing Prototype"
   editing_shipping_category: "Editing Shipping Category"
@@ -361,6 +377,7 @@ en-AU:
   extensions: Extensions
   filename: Filename
   final_confirmation: "Final Confirmation"
+  finalize: Finalize
   finalized_payments: Finalized Payments
   first_item: First Item Cost
   first_name: "First Name"
@@ -422,6 +439,7 @@ en-AU:
   listing_categories: "Listing Categories"
   listing_option_types: "Listing Option Types"
   listing_orders: "Listing Orders"
+  listing_product_groups: "Listing Product Groups"
   listing_reports: "Listing Reports"
   listing_tax_categories: "Listing Tax Categories"
   listing_users: "Listing Users"
@@ -489,6 +507,7 @@ en-AU:
   next: Next
   no_items_in_cart: "Basket is empty."
   no_match_found: "No Match Found"
+  no_payment_methods_available: "Can't check out, no payment methods are configured for this environment"
   no_products_found: "No products found"
   no_shipping_methods_available: "No shipping methods available, please change your address and try again."
   no_user_found: "No user was found with that email address"
@@ -590,7 +609,7 @@ en-AU:
         name: Ascend by product name
       ascend_by_updated_at:
         name: Ascend by actualization date
-      by_popularity:
+      descend_by_popularity:
         name: Sort by popularity(most popular first)
       descend_by_master_price:
         name: Descend by product master price
@@ -614,7 +633,7 @@ en-AU:
         args:
           words: Words
         description: "(separated by space or comma)"
-        name: "Product name or meta heywords have following"
+        name: "Product name or meta keywords have following"
         sentence: name or keywords contain <em>%s</em>
       in_taxons:
         args:
@@ -729,6 +748,8 @@ en-AU:
   sales_totals_description: "Sales Total For All Orders"
   save_and_continue: Save and Continue
   save_preferences: Save Preferences
+  scope: Scope
+  scopes: Scopes
   search: Search
   search_results: "Search results for '{{keywords}}'"
   secure_connection_type: Secure Connection Type
@@ -773,6 +794,7 @@ en-AU:
   show_only_complete_orders: "Only show complete orders"
   show_out_of_stock_products: "Show out-of-stock products"
   show_price_inc_vat: "Show price including GST"
+  showing_first_n: "Showing first {{n}}"
   sign_up: "Sign up"
   site_name: "Site Name"
   site_url: "Site URL"

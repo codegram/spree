@@ -6,6 +6,7 @@ class Payment < ActiveRecord::Base
   has_many :transactions
   alias :txns :transactions
   
+  after_save :create_payment_profile, :if => :payment_profiles_supported?
   after_save :check_payments, :if => :order_payment?
   after_destroy :check_payments, :if => :order_payment?
 
@@ -32,7 +33,7 @@ class Payment < ActiveRecord::Base
   end  
   
   def can_finalize?
-    payable.is_a?(Checkout)
+    !finalized?
   end
   
   def finalize!
@@ -41,6 +42,10 @@ class Payment < ActiveRecord::Base
     self.payable = payable.order
     save!
     payable.save!
+  end
+  
+  def finalized?
+    payable.is_a?(Order)
   end
 
   def actions
@@ -85,5 +90,13 @@ class Payment < ActiveRecord::Base
     def order_payment?
       payable_type == "Order"
     end 
+
+    def payment_profiles_supported?
+      source && source.payment_gateway && source.payment_gateway.payment_profiles_supported?
+    end
+
+    def create_payment_profile
+      source.create_payment_profile
+    end
   
 end

@@ -24,9 +24,11 @@ th:
         address1: ที่อยู่
         address2: "ที่อยู่ (เพิ่มเติม)"
         city: จังหวัด
-        firstname: ชื่อแรก
-        lastname: นามสกุล
+        country: "Country"
+        first_name: "First Name"
+        last_name: "Last Name"
         phone: โทรศัพท์
+        state: "State"
         zipcode: รหัสไปรษณีย์
       checkout:
         bill_address:
@@ -79,6 +81,15 @@ th:
         on_hand: สินค้าในคลัง
         shipping_category: กลุ่มวิธีการจัดส่ง
         tax_category: กลุ่มการเก็บภาษี
+      product_group:
+        name: "Name"
+        product_count: "Product count"
+        product_scopes: "Product scopes"
+        products: "Products"
+        url: "URL"
+      product_scope:
+        arguments: "Arguments"
+        description: "Description"
       property: 
         name: ชื่อ
         presentation: ชื่อที่แสดง
@@ -149,6 +160,9 @@ th:
       product: 
         one: Product
         other: Products
+      product_group:
+        one: "Product group"
+        other: "Product groups"
       property: 
         one: สรรพคุณ
         other: สรรพคุณอื่นๆ
@@ -199,6 +213,7 @@ th:
   add_option_value: เพิ่มรายการตัวเลือก
   add_product: "Add Product"
   add_product_properties: เพิ่มสรรพคุณ
+  add_scope: "Add a scope"
   add_state: "เพิ่มรัฐ"
   add_to_cart: เพิ่มลงตะกร้า
   add_zone: "Add Zone"
@@ -330,6 +345,7 @@ th:
   editing_option_types: แก้ไขตัวเลือก
   editing_payment_method: Editing Payment Method
   editing_product: แก้ไขสินค้า
+  editing_product_group: "Editing Product Group"
   editing_property: แก้ไขคุณลักษณะ
   editing_prototype: แก้ไขต้นแบบ
   editing_shipping_category: "แก้ไขกลุ่มวิธีการจัดส่ง"
@@ -361,6 +377,7 @@ th:
   extensions: Extensions
   filename: Filename
   final_confirmation: "การยืนยันขั้นสุดท้าย"
+  finalize: Finalize
   finalized_payments: Finalized Payments
   first_item: First Item Cost
   first_name: ชื่อแรก
@@ -422,6 +439,7 @@ th:
   listing_categories: "Listing Categories"
   listing_option_types: "Listing Option Types"
   listing_orders: รายการสั่งสินค้า
+  listing_product_groups: "Listing Product Groups"
   listing_reports: รายงานทั้งหมด
   listing_tax_categories: "รายการ แบบการคิดภาษี"
   listing_users: รายชื่อผู้ใช้
@@ -489,6 +507,7 @@ th:
   next: หน้าถัดไป
   no_items_in_cart: ""
   no_match_found: "No Match Found"
+  no_payment_methods_available: "Can't check out, no payment methods are configured for this environment"
   no_products_found: "No products found"
   no_shipping_methods_available: "No shipping methods available, please change your address and try again."
   no_user_found: "No user was found with that email address"
@@ -590,7 +609,7 @@ th:
         name: Ascend by product name
       ascend_by_updated_at:
         name: Ascend by actualization date
-      by_popularity:
+      descend_by_popularity:
         name: Sort by popularity(most popular first)
       descend_by_master_price:
         name: Descend by product master price
@@ -614,7 +633,7 @@ th:
         args:
           words: Words
         description: "(separated by space or comma)"
-        name: "Product name or meta heywords have following"
+        name: "Product name or meta keywords have following"
         sentence: name or keywords contain <em>%s</em>
       in_taxons:
         args:
@@ -729,6 +748,8 @@ th:
   sales_totals_description: "ยอดขายรวมจากทุกการสั่งซื้อ"
   save_and_continue: Save and Continue
   save_preferences: Save Preferences           
+  scope: Scope
+  scopes: Scopes
   search: ค้นหา
   search_results: "Search results for '{{keywords}}'"
   secure_connection_type: การเชื่อมต่อแบบปลอดภัย
@@ -773,6 +794,7 @@ th:
   show_only_complete_orders: แสดงเฉพาะรายการที่เสร็จสมบูรณ์
   show_out_of_stock_products: แสดงสินค้าหมดคลัง
   show_price_inc_vat: "แสดงราคารวมภาษีแล้ว"
+  showing_first_n: "Showing first {{n}}"
   sign_up: "Sign up"
   site_name: ชื่อของเว็บ
   site_url: "URL ของเว็บ"

@@ -24,9 +24,11 @@ cs-CZ:
         address1: Adresa
         address2: "Adresa (pokračování)"
         city: "Město"
-        firstname: "Křestní jméno"
-        lastname: "Příjmení"
+        country: "Country"
+        first_name: "First Name"
+        last_name: "Last Name"
         phone: Telefon
+        state: "State"
         zipcode: "PSČ"
       checkout:
         bill_address:
@@ -79,6 +81,15 @@ cs-CZ:
         on_hand: "Dostupný"
         shipping_category: "Kategorie dopravy"
         tax_category: "Daňová kategorie"
+      product_group:
+        name: "Name"
+        product_count: "Product count"
+        product_scopes: "Product scopes"
+        products: "Products"
+        url: "URL"
+      product_scope:
+        arguments: "Arguments"
+        description: "Description"
       property:
         name: "Název"
         presentation: "Zobrazení"
@@ -149,6 +160,9 @@ cs-CZ:
       product:
         one: "Výrobek"
         other: "Výrobky"
+      product_group:
+        one: "Product group"
+        other: "Product groups"
       property:
         one: "Vlastnictví"
         other: "Vlastnictví"
@@ -199,6 +213,7 @@ cs-CZ:
   add_option_value: "Přidat hodnotu volby"
   add_product: "Přidat výrobek"
   add_product_properties: "Přidat vlastnosti výrobku"
+  add_scope: "Add a scope"
   add_state: "Přidat stát"
   add_to_cart: "Přidat do košíku"
   add_zone: "Přidat zónu"
@@ -330,6 +345,7 @@ cs-CZ:
   editing_option_types: "Úprava typů volby"
   editing_payment_method: Editing Payment Method
   editing_product: "Úprava výrobku"
+  editing_product_group: "Editing Product Group"
   editing_property: "Úprava vlastnosti"
   editing_prototype: "Úprava šablony"
   editing_shipping_category: "Úprava kategorie dopravy"
@@ -361,6 +377,7 @@ cs-CZ:
   extensions: "Rozměry"
   filename: "Název souboru"
   final_confirmation: "Závěrečné potvrzení"
+  finalize: Finalize
   finalized_payments: Finalized Payments
   first_item: "Cena první položky"
   first_name: "Křestní jméno"
@@ -422,6 +439,7 @@ cs-CZ:
   listing_categories: "Výpis kategorií"
   listing_option_types: "Výpis typů voleb"
   listing_orders: "Výpis objednávek"
+  listing_product_groups: "Listing Product Groups"
   listing_reports: "Výpis zpráv"
   listing_tax_categories: "Výpis daňových kategorií"
   listing_users: "Výpis uživatelů"
@@ -489,6 +507,7 @@ cs-CZ:
   next: "Další"
   no_items_in_cart: "V košíku není žádné zboží"
   no_match_found: "Nebyla nalezena žádná shoda"
+  no_payment_methods_available: "Can't check out, no payment methods are configured for this environment"
   no_products_found: "Nebyly nalezeny žádné výrobky"
   no_shipping_methods_available: "Nebyly nalezeny žádné možnosti dopravy, změňte prosím adresu a zkuste to znova."
   no_user_found: "Nebyl nalezen žádný uživatel s touto emailovou adresou"
@@ -590,7 +609,7 @@ cs-CZ:
         name: "Vzestupně podle názvu výrobku"
       ascend_by_updated_at:
         name: "Vzestupně podle data poslední změny"
-      by_popularity:
+      descend_by_popularity:
         name: "Řadit podle popularity, nejvíce populární na začátek"
       descend_by_master_price:
         name: "Sestupně podle základní ceny"
@@ -729,6 +748,8 @@ cs-CZ:
   sales_totals_description: "Prodej celkem pro všechny objednávky"
   save_and_continue: "Uložit a pokračovat"
   save_preferences: "Uložit nastavení"
+  scope: Scope
+  scopes: Scopes
   search: Hledat
   search_results: "Výsledky vyhledávání pro '{{keywords}}'"
   secure_connection_type: "Typ bezpečného připojení"
@@ -773,6 +794,7 @@ cs-CZ:
   show_only_complete_orders: "Zobrazit pouze dokončené objednávky"
   show_out_of_stock_products: "Zobrazit zboží, které není skladem"
   show_price_inc_vat: "Zobrazit ceny včetně DPH"
+  showing_first_n: "Showing first {{n}}"
   sign_up: "Přihlásit se"
   site_name: "Název stránky"
   site_url: "Adresa stránky (URL)"

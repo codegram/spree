@@ -24,9 +24,11 @@ nb-NO:
         address1: Adresse
         address2: "Adresse (forts.)"
         city: Sted
-        firstname: "Fornavn"
-        lastname: "Etternavn"
+        country: "Country"
+        first_name: "First Name"
+        last_name: "Last Name"
         phone: Telefon
+        state: "State"
         zipcode: "Postnummer"
       checkout:
         bill_address:
@@ -79,6 +81,15 @@ nb-NO:
         on_hand: "På lager"
         shipping_category: "Fraktkategori"
         tax_category: "Momskategori"
+      product_group:
+        name: "Name"
+        product_count: "Product count"
+        product_scopes: "Product scopes"
+        products: "Products"
+        url: "URL"
+      product_scope:
+        arguments: "Arguments"
+        description: "Description"
       property: 
         name: Navn
         presentation: "Presentasjon"
@@ -149,6 +160,9 @@ nb-NO:
       product: 
         one: Produkt
         other: Produkter
+      product_group:
+        one: "Product group"
+        other: "Product groups"
       property: 
         one: Egenskap
         other: Egenskaper
@@ -199,6 +213,7 @@ nb-NO:
   add_option_value: "Legg til variasjonsverdi"
   add_product: "Add Product"
   add_product_properties: "Legg til produktegenskaper"
+  add_scope: "Add a scope"
   add_state: "Legg til tilstand"
   add_to_cart: "Legg i handlekurv"
   add_zone: "Legg til sone"
@@ -330,6 +345,7 @@ nb-NO:
   editing_option_types: "Endre variasjonstyper"
   editing_payment_method: Editing Payment Method
   editing_product: "Endre produkt"
+  editing_product_group: "Editing Product Group"
   editing_property: "Endre egenskap"
   editing_prototype: "Endre prototype"
   editing_shipping_category: Endre fraktkategori
@@ -361,6 +377,7 @@ nb-NO:
   extensions: Utvidelser
   filename: Filnavn
   final_confirmation: "Endelig bekreftelse"
+  finalize: Finalize
   finalized_payments: Finalized Payments
   first_item: First Item Cost
   first_name: "Fornavn"
@@ -422,6 +439,7 @@ nb-NO:
   listing_categories: "Kategorier"
   listing_option_types: "Variasjonstyper"
   listing_orders: "Ordrer"
+  listing_product_groups: "Listing Product Groups"
   listing_reports: "Rapporter"
   listing_tax_categories: "Momskategorier"
   listing_users: "Brukere"
@@ -489,6 +507,7 @@ nb-NO:
   next: Neste
   no_items_in_cart: "Ingen artikler i handlekurven"
   no_match_found: "Ingen treff"
+  no_payment_methods_available: "Can't check out, no payment methods are configured for this environment"
   no_products_found: "No products found"
   no_shipping_methods_available: "No shipping methods available, please change your address and try again."
   no_user_found: "No user was found with that email address"
@@ -590,7 +609,7 @@ nb-NO:
         name: Ascend by product name
       ascend_by_updated_at:
         name: Ascend by actualization date
-      by_popularity:
+      descend_by_popularity:
         name: Sort by popularity(most popular first)
       descend_by_master_price:
         name: Descend by product master price
@@ -614,7 +633,7 @@ nb-NO:
         args:
           words: Words
         description: "(separated by space or comma)"
-        name: "Product name or meta heywords have following"
+        name: "Product name or meta keywords have following"
         sentence: name or keywords contain <em>%s</em>
       in_taxons:
         args:
@@ -729,6 +748,8 @@ nb-NO:
   sales_totals_description: "Totale salg for alle ordrer"
   save_and_continue: Save and Continue
   save_preferences: "Lagre preferanser"
+  scope: Scope
+  scopes: Scopes
   search: Søk
   search_results: "Search results for '{{keywords}}'"
   secure_connection_type: "Kryptert forbindelse"
@@ -773,6 +794,7 @@ nb-NO:
   show_only_complete_orders: "Vis bare ferdige ordrer"
   show_out_of_stock_products: "Vis produkter som ikke er på lager"
   show_price_inc_vat: "Show price including VAT"
+  showing_first_n: "Showing first {{n}}"
   sign_up: "Meld meg på"
   site_name: "Site Name"
   site_url: "Site URL"
