@@ -8,13 +8,15 @@ class Shipment < ActiveRecord::Base
   has_many :state_events, :as => :stateful
   has_many :inventory_units
   before_create :generate_shipment_number
+  after_create :set_correct_state
   after_save :create_shipping_charge
+  after_destroy :release_inventory_units
 
   attr_accessor :special_instructions
   accepts_nested_attributes_for :address
   accepts_nested_attributes_for :inventory_units
 
-  validates_presence_of :inventory_units, :if => Proc.new { |unit| !unit.order.in_progress? }
+  validates_presence_of :inventory_units, :if => Proc.new { |unit| !%w(in_progress canceled).include?(unit.order.state) }
   make_permalink :field => :number
 
   def to_param
@@ -99,6 +101,12 @@ class Shipment < ActiveRecord::Base
     end
     self.number = random
   end
+  
+  def set_correct_state
+    if pending? and order.checkout_complete and !order.outstanding_balance?
+      ready
+    end
+  end
 
   def description_for_shipping_charge
     "#{I18n.t(:shipping)} (#{shipping_method.name})"
@@ -114,6 +122,10 @@ class Shipment < ActiveRecord::Base
     unless shipping_method.nil?
       errors.add :shipping_method, I18n.t("is_not_available_to_shipment_address") unless shipping_method.zone.include?(address)
     end
+  end
+
+  def release_inventory_units
+    inventory_units.each {|unit| unit.update_attribute(:shipment_id, nil)}
   end
 
 end

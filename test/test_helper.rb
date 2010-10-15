@@ -2,10 +2,10 @@ require 'rubygems'
 require 'spork'
 
 Spork.prefork do
-  # Loading more in this block will cause your tests to run faster. However, 
+  # Loading more in this block will cause your tests to run faster. However,
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
-  
+
   ENV["RAILS_ENV"] = "test"
   require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
   require 'test_help'
@@ -21,7 +21,7 @@ Spork.prefork do
     fixtures :all
   end
 
-  I18n.locale = "en-US"
+  I18n.locale = "en"
   Spree::Config.set(:default_country_id => Country.first.id) if Country.first
 
   class ActionController::TestCase
@@ -67,7 +67,7 @@ Spork.prefork do
 
     @shipping_method = Factory(:shipping_method)
     @checkout = @order.checkout
-
+    @checkout.email = Faker::Internet.email
     @checkout.ship_address = Factory(:address)
     @checkout.shipping_method = @shipping_method
 
@@ -99,13 +99,24 @@ Spork.prefork do
     @checkout.creditcard_attributes = Factory.attributes_for(:creditcard)
     @checkout.next!
   end
-      
+
   def create_new_order_v2
     create_complete_order
     @checkout.payments = [Factory(:payment)]
     @checkout.state = "complete"
     @checkout.save
     @order.complete!
+  end
+  
+  def create_paid_order
+    create_complete_order
+    @order.payments = [Factory(:payment, :amount => @order.total, :payable => @order)]
+    until @order.checkout.complete?
+      @order.checkout.next!
+    end
+    @order.payments.first.finalize!
+    @order.reload
+    @order.pay!
   end
 
 # useful method for functional tests that require an authenticated user
@@ -124,5 +135,5 @@ end
 
 Spork.each_run do
   # This code will be run each time you run your specs.
-  
+
 end

@@ -10,20 +10,20 @@ class Order < ActiveRecord::Base
   after_create :create_checkout, :create_shipment, :create_tax_charge
 
   belongs_to :user
-  has_many :state_events, :as => :stateful
+  has_many :state_events, :as => :stateful, :dependent => :destroy
 
   has_many :line_items, :extend => Totaling, :dependent => :destroy
   has_many :inventory_units
 
   has_many :payments, :as => :payable, :extend => Totaling
 
-  has_one :checkout
+  has_one :checkout, :dependent => :destroy
   has_one :bill_address, :through => :checkout
   has_one :ship_address, :through => :checkout
   has_many :shipments, :dependent => :destroy
   has_many :return_authorizations, :dependent => :destroy
 
-  has_many :adjustments,      :extend => Totaling, :order => :position
+  has_many :adjustments,      :extend => Totaling, :order => :position, :dependent => :destroy
   has_many :charges,          :extend => Totaling, :order => :position
   has_many :credits,          :extend => Totaling, :order => :position
   has_many :shipping_charges, :extend => Totaling, :order => :position
@@ -52,7 +52,7 @@ class Order < ActiveRecord::Base
   make_permalink :field => :number
 
   # attr_accessible is a nightmare with attachment_fu, so use attr_protected instead.
-  attr_protected :charge_total, :item_total, :total, :user, :number, :state, :token
+  attr_protected :charge_total, :item_total, :total, :user, :user_id, :number, :state, :token
 
   def checkout_complete; !!completed_at; end
 
@@ -89,16 +89,16 @@ class Order < ActiveRecord::Base
       transition :to => 'paid', :if => :allow_pay?
     end
     event :under_paid do
-      transition :to => 'balance_due', :from => ['paid', 'new', 'credit_owed', 'shipped', 'awaiting_return']
+      transition :to => 'balance_due', :from => ['paid', 'new', 'credit_owed', 'shipped', 'awaiting_return', 'canceled']
     end
     event :over_paid do
-      transition :to => 'credit_owed', :from => ['paid', 'new', 'balance_due', 'shipped', 'awaiting_return']
+     transition :to => 'credit_owed', :from => ['paid', 'new', 'balance_due', 'shipped', 'awaiting_return', 'canceled']
     end
     event :ship do
       transition :to => 'shipped', :from  => 'paid'
     end
     event :return_authorized do
-      transition :to => 'awaiting_return', :from => 'shipped'
+      transition :to => 'awaiting_return'
     end
   end
 
@@ -106,6 +106,13 @@ class Order < ActiveRecord::Base
     # pop the resume event so we can see what the event before that was
     state_events.pop if state_events.last.name == "resume"
     update_attribute("state", state_events.last.previous_state)
+
+    if paid?
+      InventoryUnit.sell_units(self) if inventory_units.empty?
+      shipment.inventory_units = inventory_units
+      shipment.ready!
+    end
+
   end
 
   def make_shipments_shipped
@@ -123,13 +130,8 @@ class Order < ActiveRecord::Base
   end
 
   def shipped_units
-    shipped_units = shipments.inject([]) { |units, shipment| units << shipment.inventory_units if shipment.shipped? }
-
-    if shipped_units.nil?
-      return nil
-    else
-      shipped_units.flatten!
-    end
+    shipped_units = shipments.inject([]) { |units, shipment| units.concat(shipment.shipped? ? shipment.inventory_units : []) }
+    return nil if shipped_units.empty?
 
     shipped = {}
     shipped_units.group_by(&:variant_id).each do |variant_id, ship_units|
@@ -286,14 +288,13 @@ class Order < ActiveRecord::Base
     end
 
     self.adjustment_total = self.charge_total - self.credit_total
-
     self.total            = self.item_total   + self.adjustment_total
   end
 
   def update_totals!
     update_totals
 
-    payments_total = self.payments.total
+    payments_total = self.payments.reload.total
     if payments_total < self.total
       #Total is higher so balance_due
       self.under_paid
@@ -365,6 +366,7 @@ class Order < ActiveRecord::Base
   end
 
   def cancel_order
+    make_shipments_pending
     restock_inventory
     OrderMailer.deliver_cancel(self)
   end
@@ -373,6 +375,8 @@ class Order < ActiveRecord::Base
     inventory_units.each do |inventory_unit|
       inventory_unit.restock! if inventory_unit.can_restock?
     end
+
+    inventory_units.reload
   end
 
   def update_line_items

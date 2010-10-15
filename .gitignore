@@ -10,6 +10,7 @@
 public/dispatch.cgi
 public/dispatch.fcgi
 public/dispatch.rb
+public/favicon.ico
 httpd
 pgsql
 config/*-public.asc
@@ -42,3 +43,6 @@ var
 TAGS
 nbproject
 vendor/extensions/theme_default/app/stylesheets/*.css
+tags
+*.swp
+rerun.txt

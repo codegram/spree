@@ -9,12 +9,12 @@ class Admin::PaymentsController < Admin::BaseController
     build_object
     load_object
 
-    unless object.save
-      response_for :create_fails
-      return
-    end
+    begin
 
-    begin 
+      unless object.save
+        response_for :create_fails
+        return
+      end
 
       if @order.checkout.state == "complete"
         object.process!
@@ -25,13 +25,14 @@ class Admin::PaymentsController < Admin::BaseController
         until @order.checkout.state == "complete"
           @order.checkout.next!
         end
-        flash = t('new_order_completed')
+        self.notice = t('new_order_completed')
         redirect_to admin_order_url(@order)
       end
 
     rescue Spree::GatewayError => e
-      flash.now[:error] = "#{e.message}"
-      response_for :create_fails
+      flash[:error] = "#{e.message}"
+      @payment.destroy
+      redirect_to new_object_path
     end
   end
 
@@ -42,21 +43,21 @@ class Admin::PaymentsController < Admin::BaseController
     Payment.transaction do
       @payment.source.send("#{event}", @payment)
     end
-    flash[:notice] = t('payment_updated')
+    self.notice = t('payment_updated')
   rescue Spree::GatewayError => ge
     flash[:error] = "#{ge.message}"
   ensure
     redirect_to collection_path
-  end  
+  end
 
   def finalize
     object.finalize!
     redirect_to collection_path
   end
-  
+
   private
 
-  def object    
+  def object
     @object ||= Payment.find(param) unless param.nil?
     @object
   end
@@ -70,7 +71,7 @@ class Admin::PaymentsController < Admin::BaseController
 
   def load_data
     load_object
-    @payment_methods = PaymentMethod.available   
+    @payment_methods = PaymentMethod.available(:back_end)
     if object and object.payment_method
       @payment_method = object.payment_method
     else

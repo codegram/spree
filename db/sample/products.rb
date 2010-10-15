@@ -1,9 +1,9 @@
 require 'find'
 # make sure the product images directory exists
-FileUtils.mkdir_p "#{RAILS_ROOT}/public/assets/products/"
+FileUtils.mkdir_p "#{Rails.root}/public/assets/products/"
 
 # make product images available to the app
-target = "#{RAILS_ROOT}/public/assets/products/"
+target = "#{Rails.root}/public/assets/products/"
 source = "#{SPREE_ROOT}/lib/tasks/sample/products/"
 
 Find.find(source) do |f|

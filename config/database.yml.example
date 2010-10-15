@@ -8,15 +8,10 @@ test:
   adapter: sqlite3
   database: db/test.sqlite3
 
+cucumber:
+  adapter: sqlite3
+  database: db/cucumber.sqlite3
+
 production:
   adapter: sqlite3
   database: db/production.sqlite3
-                                    
-# special mode for demo.spreecommerce.com (you probably don't need this)                                    
-demo:
-  adapter: sqlite3
-  database: db/production.sqlite3
-  
-cucumber:
-  adapter: sqlite3
-  database: db/test.sqlite3

@@ -9,7 +9,7 @@ class Checkout < ActiveRecord::Base
   belongs_to :order
   belongs_to :bill_address, :foreign_key => "bill_address_id", :class_name => "Address"
   belongs_to :ship_address, :foreign_key => "ship_address_id", :class_name => "Address"
-  belongs_to :shipping_method  
+  belongs_to :shipping_method
   has_many :payments, :as => :payable
 
   accepts_nested_attributes_for :bill_address
@@ -18,9 +18,10 @@ class Checkout < ActiveRecord::Base
 
   attr_accessor :coupon_code
   attr_accessor :use_billing
+  attr_accessor :current_validation_fields
 
   validates_presence_of :order_id, :shipping_method_id
-  validates_format_of :email, :with => /^\S+@\S+\.\S+$/, :allow_blank => true
+  validates_format_of :email, :with => /^\S+@\S+\.\S+$/
 
   validation_group :register, :fields => ["email"]
 
@@ -32,6 +33,11 @@ class Checkout < ActiveRecord::Base
                                        "ship_address.address1", "ship_address.city", "ship_address.statename",
                                        "ship_address.zipcode"]
   validation_group :delivery, :fields => ["shipping_method_id"]
+
+
+  def after_initialize
+    enable_validation_group(state.to_sym)
+  end
 
   def completed_at
     order.completed_at
@@ -47,7 +53,7 @@ class Checkout < ActiveRecord::Base
   def valid?
     # will perform partial validation when @checkout.enabled_validation_group :step is called
     result = ar_valid?
-    return result unless validation_group_enabled?
+    return result if @current_validation_fields.nil?
 
     relevant_errors = errors.select { |attr, msg| @current_validation_fields.include?(attr) }
     errors.clear
@@ -71,15 +77,15 @@ class Checkout < ActiveRecord::Base
     state_machine.states.by_priority.map(&:name)
   end
 
-  def shipping_methods
+  def shipping_methods(display_on=nil)
     return [] unless ship_address
-    ShippingMethod.all_available(order)
+    ShippingMethod.all_available(order,display_on)
   end
-  
+
   def payment
     payments.first
   end
-  
+
   private
 
   def check_addresses_on_duplication
@@ -118,7 +124,7 @@ class Checkout < ActiveRecord::Base
   end
 
   def process_coupon_code
-    return unless @coupon_code and coupon = Coupon.find_by_code(@coupon_code.upcase)
+    return unless @coupon_code and coupon = Coupon.find(:first, :conditions => ["UPPER(code) = ?",@coupon_code.upcase])
     coupon.create_discount(order)
     # recalculate order totals
     order.save

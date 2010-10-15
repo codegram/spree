@@ -23,6 +23,7 @@ class CheckoutsController < Spree::BaseController
   address.edit_hook :set_ip_address
   payment.edit_hook :load_available_payment_methods
   update.before :clear_payments_if_in_payment_state
+  update.after :update_payment_if_order_total_has_changed
 
   # customized verison of the standard r_c update method (since we need to handle gateway errors, etc)
   def update
@@ -30,7 +31,6 @@ class CheckoutsController < Spree::BaseController
 
     # call the edit hooks for the current step in case we experience validation failure and need to edit again
     edit_hooks
-    @checkout.enable_validation_group(@checkout.state.to_sym)
     @prev_state = @checkout.state
 
     before :update
@@ -145,6 +145,7 @@ class CheckoutsController < Spree::BaseController
 
   def next_step
     @checkout.next!
+    flash[:analytics] = "/checkout/#{object.state}"
     # call edit hooks for this next step since we're going to just render it (instead of issuing a redirect)
     edit_hooks
   end
@@ -155,13 +156,23 @@ class CheckoutsController < Spree::BaseController
   end
 
   def clear_payments_if_in_payment_state
-    if @checkout.payment?
-      @checkout.payments.clear
+    # lets clear payments only if we actually are receiving a payment. Otherwise the payment can get cleared
+    # if we are submitting a blank coupon anytime after the payment has been received. 
+    if @checkout.payment? && params[:checkout] && params[:checkout][:payments_attributes]
+      @checkout.payments.destroy_all
     end
+  end
+  
+  def update_payment_if_order_total_has_changed
+     if @checkout.payment
+       @order.reload
+       logger.debug "CHECKOUT PAYMENT #{@checkout.payment.amount.to_s}, ORDER TOTAL: #{@order.total.to_s}"
+       @checkout.payment.update_attribute(:amount, @order.total) if @checkout.payment.amount != @order.total
+     end
   end
 
   def load_available_payment_methods
-    @payment_methods = PaymentMethod.available
+    @payment_methods = PaymentMethod.available(:front_end)
     if @checkout.payment and @checkout.payment.payment_method
       @payment_method = @checkout.payment.payment_method
     else
@@ -175,28 +186,30 @@ class CheckoutsController < Spree::BaseController
 
   def complete_order
     if @checkout.order.out_of_stock_items.empty?
-      flash[:notice] = t('order_processed_successfully')
+      self.notice = t('order_processed_successfully')
     else
-      flash[:notice] = t('order_processed_but_following_items_are_out_of_stock')
-      flash[:notice] += '<ul>'
+      self.notice = t('order_processed_but_following_items_are_out_of_stock')
+      self.notice += '<ul>'
       @checkout.order.out_of_stock_items.each do |item|
-        flash[:notice] += '<li>' + t(:count_of_reduced_by,
+        self.notice += '<li>' + t(:count_of_reduced_by,
                               :name => item[:line_item].variant.name,
                               :count => item[:count]) +
                           '</li>'
       end
-      flash[:notice] += '<ul>'
+      self.notice += '<ul>'
     end
   end
 
   def rate_hash
     begin
-      @checkout.shipping_methods.collect do |ship_method|
+
+      @checkout.shipping_methods(:front_end).collect do |ship_method|
         @checkout.shipment.shipping_method = ship_method
         { :id => ship_method.id,
           :name => ship_method.name,
-          :rate => number_to_currency(ship_method.calculate_cost(@checkout.shipment)) }
-      end
+          :cost => ship_method.calculate_cost(@checkout.shipment)
+        }
+      end.sort_by{|r| r[:cost]}
     rescue Spree::ShippingError => ship_error
       flash[:error] = ship_error.to_s
       []
@@ -215,13 +228,13 @@ class CheckoutsController < Spree::BaseController
   end
 
   def ensure_payment_methods
-    if PaymentMethod.available.none?
+    if PaymentMethod.available(:front_end).none?
       flash[:error] = t(:no_payment_methods_available)
       redirect_to edit_order_path(params[:order_id])
       false
     end
   end
-  
+
   # Make sure that the order is assigned to the current user if logged in
   def ensure_order_assigned_to_user
     load_object
@@ -229,5 +242,5 @@ class CheckoutsController < Spree::BaseController
       @order.update_attribute(:user, current_user)
     end
   end
-  
+
 end
